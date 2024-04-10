@@ -18,7 +18,7 @@ function Header() {
         {
             name: "Cart",
             slug: "/cart",
-            active: userStatus,
+            active: true,
             id: uuidv4(),
         },
         {
@@ -36,7 +36,7 @@ function Header() {
         {
             name: "Signup",
             slug: "/signup",
-            active: true,
+            active: !userStatus,
             id: uuidv4(),
         },
     ];

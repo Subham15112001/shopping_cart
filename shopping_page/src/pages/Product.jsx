@@ -13,7 +13,7 @@ function Product() {
     dispatch(get_product(id));
   },[])
   data = useSelector((store)=> store?.cart?.product);
-  console.log(data)
+
   return (data != {})&&(
     <div>
        <Card title={data.title} 
@@ -21,6 +21,7 @@ function Product() {
              image={data.image}
              category={data.category}
              price={data.price}
+             id = {data.id}
          />
     </div>
   )

@@ -14,15 +14,22 @@ const shopSlice = createSlice({
     reducers:{
         addItem:(state,action) => {
             //action payload refer to item in obj form
-            state.items.push(action.payload);
+            let temp = state.items;
+            console.log(temp)
+            temp.push(action.payload);
+            state.items = temp;
+            console.log(action.payload);
+            console.log(state.items);
+
         },
         updateTotalAmount:(state) =>{
             let total_amount = 0;
-            let items = state.items;
+            const items = state.items;
 
             for(let i = 0;i<items.length;i++){
-                total_amount = total_amount + items[i]?.price;
+                total_amount = total_amount + (items[i]?.price)*(items[i]?.size);
             }
+            state.total_amount = total_amount;
         },
         removeItem:(state,action) => {
             let oldArray = state.items;
@@ -31,12 +38,35 @@ const shopSlice = createSlice({
             })
             state.items = newArray;
         },
+        increaseSize:(state,action) => {
+            const id = action.payload;
+            let items = state.items;
+            for(let i = 0;i<items.length;i++){
+
+                if (items[i].id === id) {
+                    items[i].size++;
+                }
+
+            }
+            state.items = items;
+        },
+        decreaseSize:(state,action) => {
+            const id = action.payload;
+            let items = state.items;
+            for(let i = 0;i<items.length;i++){
+
+                if(items[i].id === id){
+                        items[i].size--;
+                }
+            }
+            state.items = items;
+        },
         selectCategory:(state,action) => {
             state.category = action.payload;
         }
     }
 })
 
-export const {addItem,updateTotalAmount,removeItem,selectCategory} = shopSlice.actions;
+export const {addItem,updateTotalAmount,removeItem,selectCategory,increaseSize,decreaseSize} = shopSlice.actions;
 
 export default shopSlice.reducer;

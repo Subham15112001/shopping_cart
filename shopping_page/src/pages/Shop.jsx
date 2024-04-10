@@ -13,7 +13,7 @@ function Shop() {
  
 
   const products = useSelector((store)=>store.cart.products)
-  console.log(products)
+
   return (products) && (
     <div className='grid grid-cols-2 m-4'>
       {products.map((value) => {

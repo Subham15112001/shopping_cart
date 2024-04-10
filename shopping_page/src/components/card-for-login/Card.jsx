@@ -1,18 +1,34 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
-import {Link  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from '../../appwrite/auth';
+import { useDispatch } from "react-redux";
+import { login } from "../../features/user/userSlice";
+
 function Card() {
 
-    const {register,handleSubmit} = useForm({
+    const { register, handleSubmit } = useForm({
         defaultValues: {
-            email:"",
-            password:"",
+            email: "",
+            password: "",
         }
     });
-   
-    const login = async (data) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const Login = async (data) => {
         try {
-            console.log(data);
+            const login_user = await authService.login(data);
+            if (login_user) {
+                const getData = authService.getCurrentUser();
+                getData.then((value)=>{
+                    console.log(value);
+                    dispatch(login(value));
+                    navigate('/');
+                }).catch((error)=>{
+                    console.log(error)
+                }) 
+            }
         } catch (error) {
             console.log(error)
         }
@@ -28,7 +44,7 @@ function Card() {
                   Sign in to your account
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit(async (data) => {
-                login(data)
+                Login(data)
               })}>
                   <div>
                       <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>

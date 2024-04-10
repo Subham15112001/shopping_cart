@@ -61,7 +61,6 @@ const cartSlice = createSlice({
 
         builder.addCase(get_all_categories.fulfilled,(state,action) => {
             state.all_categories = action.payload;
-            console.log(action.payload)
         })
     }
 })

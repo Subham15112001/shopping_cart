@@ -1,16 +1,43 @@
 import React from 'react'
+import { useDispatch,useSelector } from "react-redux";
+import { addItem, updateTotalAmount } from "../../features/shop/shopSlice";
 
 function Card({title="ghis dff df",
               description="Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
               image="https://fakestoreapi.com/img/61U7T1koQqL._AC_SX679_.jpg",
               category="sfdf",
-              price="123"
+              price="123",
+              id=1,
             }) {
+  
+  const dispatch = useDispatch();
+  const items = useSelector((store) => store.shop.items);
 
-
+  function addToCart(){
+    const item = {
+      id,
+      description,
+      image,
+      category,
+      price,
+      title,
+      size:1,
+    }
+    
+   //dont want duplicates
+    for(let i = 0;i<items.length;i++){
+      if(items[i].id == id){
+        alert("already added")
+        return;
+      }
+    }
+    alert("added")
+    dispatch(addItem(item))
+    dispatch(updateTotalAmount());
+  }
   return (
     <>
-        <section className="py-12 sm:py-16"> 
+        <section className="py-12 sm:py-16" id={id}> 
   <div className="container mx-auto px-4">
    
 
@@ -34,7 +61,11 @@ function Card({title="ghis dff df",
             <h1 className="text-3xl font-bold">${price}</h1>
           </div>
 
-          <button type="button" className="inline-flex items-center justify-center rounded-md border-2 border-transparent bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800">
+          <button type="button" 
+                  className="inline-flex items-center justify-center rounded-md border-2 border-transparent 
+                           bg-gray-900 bg-none px-12 py-3 text-center text-base font-bold text-white 
+                           transition-all duration-200 ease-in-out focus:shadow hover:bg-gray-800"
+                  onClick={addToCart}>
             <svg xmlns="http://www.w3.org/2000/svg" className="shrink-0 mr-3 h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
