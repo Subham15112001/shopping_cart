@@ -15,11 +15,8 @@ const shopSlice = createSlice({
         addItem:(state,action) => {
             //action payload refer to item in obj form
             let temp = state.items;
-            console.log(temp)
             temp.push(action.payload);
             state.items = temp;
-            console.log(action.payload);
-            console.log(state.items);
 
         },
         updateTotalAmount:(state) =>{
@@ -63,10 +60,13 @@ const shopSlice = createSlice({
         },
         selectCategory:(state,action) => {
             state.category = action.payload;
+        },
+        clearData:(state) => {
+            state.items = [];
         }
     }
 })
 
-export const {addItem,updateTotalAmount,removeItem,selectCategory,increaseSize,decreaseSize} = shopSlice.actions;
+export const {addItem,updateTotalAmount,removeItem,selectCategory,increaseSize,decreaseSize,clearData} = shopSlice.actions;
 
 export default shopSlice.reducer;

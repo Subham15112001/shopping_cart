@@ -1,6 +1,8 @@
 import React from 'react'
 import { useDispatch,useSelector } from "react-redux";
 import { addItem, updateTotalAmount } from "../../features/shop/shopSlice";
+import { login,logout } from "../../features/user/userSlice";
+import service from "../../appwrite/config";
 
 function Card({title="ghis dff df",
               description="Easy upgrade for faster boot up, shutdown, application load and response (As compared to 5400 RPM SATA 2.5” hard drive; Based on published specifications and internal benchmarking tests using PCMark vantage scores) Boosts burst write performance, making it ideal for typical PC workloads The perfect balance of performance and reliability Read/write speeds of up to 535MB/s/450MB/s (Based on internal testing; Performance may vary depending upon drive capacity, host device, OS and application.)",
@@ -12,8 +14,10 @@ function Card({title="ghis dff df",
   
   const dispatch = useDispatch();
   const items = useSelector((store) => store.shop.items);
+  const userStatus = useSelector((store) => store.user.status);
+  const userData = useSelector((store) => store.user.userData);
 
-  function addToCart(){
+  async function addToCart(){
     const item = {
       id,
       description,
@@ -32,8 +36,19 @@ function Card({title="ghis dff df",
       }
     }
     alert("added")
+
     dispatch(addItem(item))
     dispatch(updateTotalAmount());
+
+    if(userStatus == true){
+
+      const user_id = userData.$id;
+      const item_id = `${id}`;
+      const quantity = `1`;
+
+      const upload = await service.createCart({user_id,item_id,quantity})
+      
+    }
   }
   return (
     <>

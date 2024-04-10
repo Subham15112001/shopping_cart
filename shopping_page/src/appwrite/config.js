@@ -18,7 +18,7 @@ export class Service{
     async createCart({user_id,item_id,quantity}){
         const itemId = `${user_id}${item_id}`;
         try {
-            return this.databases.createDocument(
+            return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 itemId,
@@ -29,6 +29,7 @@ export class Service{
                 }
             )
         } catch (error) {
+            console.log(error)
             throw error;
         }
     }
@@ -37,7 +38,7 @@ export class Service{
         const itemId = `${user_id}${item_id}`;
 
         try {
-            return this.databases.updateDocument(
+            return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 itemId,
@@ -54,7 +55,7 @@ export class Service{
         const itemId = `${user_id}${item_id}`;
 
         try {
-            return this.databases.deleteDocument(
+            return await this.databases.deleteDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 itemId,
@@ -65,13 +66,13 @@ export class Service{
     }
 
     async getCart(id){
-      const query = [Query.equal("user_id",`${id}`)]
+      const queries = [Query.equal("user_id",[`${id}`])];
 
       try {
-        return this.databases.listDocuments(
+        return await this.databases.listDocuments(
             conf.appwriteDatabaseId,
             conf.appwriteCollectionId,
-            query
+            queries
         )
       } catch (error) {
         console.log(error)

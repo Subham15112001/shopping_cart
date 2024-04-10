@@ -19,8 +19,11 @@ function Card() {
     const Login = async (data) => {
         try {
             const login_user = await authService.login(data);
+
             if (login_user) {
+
                 const getData = authService.getCurrentUser();
+
                 getData.then((value)=>{
                     console.log(value);
                     dispatch(login(value));
@@ -28,6 +31,7 @@ function Card() {
                 }).catch((error)=>{
                     console.log(error)
                 }) 
+                
             }
         } catch (error) {
             console.log(error)
