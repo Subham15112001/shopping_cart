@@ -8,7 +8,7 @@ import { Header } from './components/index';
 import { Outlet } from 'react-router-dom';
 import { login,logout } from "./features/user/userSlice";
 import { updateTotalAmount ,addItem,clearData} from "./features/shop/shopSlice";
-
+import Tempko from './components/Tempko';
 function App() {
 
   const dispatch = useDispatch();
@@ -71,6 +71,9 @@ function App() {
       <div className='box-border min-h-screen w-screen  bg-gradient-to-r from-purple-600 to-blue-600 '>
       <div className='w-full '>
         <Header />
+        {/* <Tempko
+          name={"hello"}
+        /> */}
         <main className='flex-grow'>
         <Outlet />
         </main>
